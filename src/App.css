@@ -40,6 +40,43 @@
   width: 100%;
   text-align: center;
 }
+.modal-content li{
+  border: 1px solid #5B5B5B;
+  margin:10px;
+  min-height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal-content ul{
+  list-style-type: none;
+  padding: 0
+}
+.pagination-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-buttons button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  font-size: 16px;
+  color: #007bff;
+  background-color: transparent;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-buttons button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
 
 .close-modal-button {
   padding: 10px 20px;

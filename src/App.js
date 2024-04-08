@@ -1,35 +1,40 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.css';
 
 function App() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [meetingRecords, setMeetingRecords] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (modalIsOpen) {
             fetchMeetingRecords();
         }
-    }, [modalIsOpen]); // Теперь запрос на записи встреч отправляется только при открытии модального окна
+    }, [modalIsOpen, currentPage]);
 
     const fetchMeetingRecords = async () => {
+        setIsLoading(true);
         try {
-            const response = await fetch('https://slmaxzoom.outer.cnvl.io/api/zoom/records', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                body: JSON.stringify({ domain: 'testdomain' })
-            });
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                setMeetingRecords(data.data); // Устанавливаем записи встреч в состояние
-            } else {
-                console.error('Ошибка при получении записей встреч:', response.status);
-            }
+            const response = await axios.post(
+                'https://slmaxzoom.outer.cnvl.io/api/zoom/records',
+                { domain: 'testdomain', page: currentPage, perPage: 2 }
+            );
+            setMeetingRecords(response.data.data);
+            setTotalPages(response.data.last_page);
         } catch (error) {
-            console.error('Ошибка при получении записей встреч:', error);
+            console.error('Error fetching meeting records:', error);
+        } finally {
+            setIsLoading(false);
         }
+    };
+
+    const formatDateString = (dateString) => {
+        const date = new Date(dateString);
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return date.toLocaleDateString('ru-RU', options);
     };
 
     return (
@@ -40,15 +45,24 @@ function App() {
                     <div className="modal-content">
                         <h1>Список встреч</h1>
                         <ul>
-                            {meetingRecords.map((record, index) => (
-                                <li key={index}>
-                                    <strong>ID:</strong> {record.id}<br />
-                                    <strong>Домен:</strong> {record.domain}<br />
-                                    <strong>Ссылка на запись:</strong> {record.record_link}<br />
-                                    <strong>Дата создания:</strong> {record.created_at}
-                                </li>
-                            ))}
+                            {isLoading ? (
+                                <p>Загрузка...</p>
+                            ) : (
+                                meetingRecords.map((record, index) => (
+                                    <li key={index}>
+                                        <div className="record-item">
+                                            <div>{formatDateString(record.created_at)}</div>
+                                            <a href={record.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
+                                        </div>
+                                    </li>
+                                ))
+                            )}
                         </ul>
+                        <div className="pagination-buttons">
+                            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+                            <span>Page {currentPage} of {totalPages}</span>
+                            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
+                        </div>
                         <button className="close-modal-button" onClick={() => setModalIsOpen(false)}>Закрыть модальное окно</button>
                     </div>
                 </div>
