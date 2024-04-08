@@ -13,7 +13,7 @@ function App() {
         if (modalIsOpen) {
             fetchMeetingRecords();
         }
-    }, [modalIsOpen, currentPage]);
+    }, [modalIsOpen]);
 
     const fetchMeetingRecords = async () => {
         setIsLoading(true);
