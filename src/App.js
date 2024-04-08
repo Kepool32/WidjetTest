@@ -10,10 +10,11 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        if (modalIsOpen) {
+        if (currentPage > 0) {
             fetchMeetingRecords();
         }
-    }, [modalIsOpen, currentPage]);
+    }, [currentPage]);
+
 
     const fetchMeetingRecords = async () => {
         setIsLoading(true);
