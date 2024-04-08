@@ -10,27 +10,26 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        const fetchMeetingRecords = async () => {
+            setIsLoading(true);
+            try {
+                const response = await axios.post(
+                    'https://slmaxzoom.outer.cnvl.io/api/zoom/records',
+                    { domain: 'testdomain', page: currentPage, perPage: 2 }
+                );
+                setMeetingRecords(response.data.data);
+                setTotalPages(response.data.last_page);
+            } catch (error) {
+                console.error('Error fetching meeting records:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         if (currentPage > 0) {
             fetchMeetingRecords();
         }
-    }, [currentPage]);
-
-
-    const fetchMeetingRecords = async () => {
-        setIsLoading(true);
-        try {
-            const response = await axios.post(
-                'https://slmaxzoom.outer.cnvl.io/api/zoom/records',
-                { domain: 'testdomain', page: currentPage, perPage: 2 }
-            );
-            setMeetingRecords(response.data.data);
-            setTotalPages(response.data.last_page);
-        } catch (error) {
-            console.error('Error fetching meeting records:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    }, [currentPage]); // Добавлен currentPage в массив зависимостей
 
     const formatDateString = (dateString) => {
         const date = new Date(dateString);
