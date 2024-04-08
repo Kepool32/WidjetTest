@@ -4,12 +4,7 @@ import './App.css';
 function App() {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [meetingRecords, setMeetingRecords] = useState([]);
-    const [domain, setDomain] = useState('');
-    const currentDomain = window.location.hostname;
-    const currentURL = window.location.href;
-    console.log(currentURL); // Выведет полный URL текущей страницы
 
-    console.log(currentDomain);
     useEffect(() => {
         if (modalIsOpen) {
             fetchMeetingRecords();
