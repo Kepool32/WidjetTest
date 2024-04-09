@@ -36,20 +36,34 @@ function App() {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         return date.toLocaleDateString('ru-RU', options);
     };
-    let selectedContact = window.AMOCRM.data.current_card.model.attributes;
+
     let id=window.AMOCRM.data.current_card.id
-    let firstName = selectedContact['contact[FN]'];
-    let lastName = selectedContact['contact[LN]'];
     let entity=window.AMOCRM.data.current_entity
+   /* let domain = window.AMOCRM.widgets.system.domain;*/
+    let name=window.AMOCRM.data.current_card.user.name;
 
-    console.log(firstName, lastName,id,entity);
 
+    const createMeeting = async () => {
+        try {
+            await axios.post('https://slmaxzoom.outer.cnvl.io/api/zoom/meetings', {
+                domain: "testdomain",
+                first_name: name,
+                entity: entity,
+                entity_id: id
+            });
+
+            setCurrentPage(1);
+        } catch (error) {
+            console.error('Error creating meeting:', error);
+        }
+    };
     return (
         <div className="App">
             <button className="open-modal-button" onClick={() => setModalIsOpen(true)}>Открыть модальное окно</button>
             {modalIsOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content">
+                        <button className="create-meeting-button" onClick={createMeeting}>Создать встречу</button>
                         <h1>Список встреч</h1>
                         <ul>
                             {isLoading ? (
