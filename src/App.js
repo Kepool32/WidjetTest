@@ -36,6 +36,13 @@ function App() {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         return date.toLocaleDateString('ru-RU', options);
     };
+    let selectedContact = window.AMOCRM.data.current_card.model.attributes;
+    let id=window.AMOCRM.data.current_card.id
+    let firstName = selectedContact['contact[FN]'];
+    let lastName = selectedContact['contact[LN]'];
+    let entity=window.AMOCRM.data.current_entity
+
+    console.log(firstName, lastName,id,entity);
 
     return (
         <div className="App">
