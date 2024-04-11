@@ -8,6 +8,7 @@ function App() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
+    let domain = window.AMOCRM.widgets.system.domain || "";
 
     useEffect(() => {
         const fetchMeetingRecords = async () => {
@@ -29,7 +30,7 @@ function App() {
         if (currentPage > 0) {
             fetchMeetingRecords();
         }
-    }, [currentPage,domain]); // Добавлен currentPage в массив зависимостей
+    }, [currentPage]); // Добавлен currentPage в массив зависимостей
 
     const formatDateString = (dateString) => {
         const date = new Date(dateString);
@@ -39,7 +40,6 @@ function App() {
 
     let id=window.AMOCRM.data.current_card.id || 0
     let entity=window.AMOCRM.data.current_entity || ""
-    let domain = window.AMOCRM.widgets.system.domain || "";
     let name=window.AMOCRM.data.current_card.user.name || "";
 
 
