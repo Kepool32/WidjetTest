@@ -57,7 +57,7 @@ function App() {
             console.error('Error creating meeting:', error);
         }
     };
-    console.log(meetingRecords)
+    console.log(meetingRecords.record)
     return (
         <div className="App">
             <button className="open-modal-button" onClick={() => setModalIsOpen(true)}>Посмотреть записи</button>
@@ -75,7 +75,7 @@ function App() {
                                         <li key={index}>
                                             <div className="record-item">
                                                 <div>{formatDateString(record.created_at)}</div>
-                                                <a href={record.record.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
+                                                <a href={record.records.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
                                             </div>
                                         </li>
                                     ))
