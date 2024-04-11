@@ -57,6 +57,7 @@ function App() {
             console.error('Error creating meeting:', error);
         }
     };
+    console.log(meetingRecords)
     return (
         <div className="App">
             <button className="open-modal-button" onClick={() => setModalIsOpen(true)}>Посмотреть записи</button>
