@@ -75,7 +75,7 @@ function App() {
                                         <li key={index}>
                                             <div className="record-item">
                                                 <div>{formatDateString(record.created_at)}</div>
-                                                <a href={record.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
+                                                <a href={record.record.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
                                             </div>
                                         </li>
                                     ))
