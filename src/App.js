@@ -59,26 +59,28 @@ function App() {
     };
     return (
         <div className="App">
-            <button className="open-modal-button" onClick={() => setModalIsOpen(true)}>Открыть модальное окно</button>
+            <button className="open-modal-button" onClick={() => setModalIsOpen(true)}>Посмотреть записи</button>
             {modalIsOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <button className="create-meeting-button" onClick={createMeeting}>Создать встречу</button>
                         <h1>Список встреч</h1>
-                        <ul>
-                            {isLoading ? (
-                                <p>Загрузка...</p>
-                            ) : (
-                                meetingRecords.map((record, index) => (
-                                    <li key={index}>
-                                        <div className="record-item">
-                                            <div>{formatDateString(record.created_at)}</div>
-                                            <a href={record.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
-                                        </div>
-                                    </li>
-                                ))
-                            )}
-                        </ul>
+                        <div className='modal-content-item'>
+                            <ul>
+                                {isLoading ? (
+                                    <p>Загрузка...</p>
+                                ) : (
+                                    meetingRecords.map((record, index) => (
+                                        <li key={index}>
+                                            <div className="record-item">
+                                                <div>{formatDateString(record.created_at)}</div>
+                                                <a href={record.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
+                                            </div>
+                                        </li>
+                                    ))
+                                )}
+                            </ul>
+                        </div>
                         <div className="pagination-buttons">
                             <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
                             <span>Page {currentPage} of {totalPages}</span>
