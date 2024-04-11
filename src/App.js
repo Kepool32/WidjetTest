@@ -15,7 +15,7 @@ function App() {
             try {
                 const response = await axios.post(
                     'https://slmaxzoom.outer.cnvl.io/api/zoom/records',
-                    { domain: 'testdomain', page: currentPage, perPage: 2 }
+                    { domain: domain, page: currentPage, perPage: 2 }
                 );
                 setMeetingRecords(response.data.data);
                 setTotalPages(response.data.last_page);
@@ -37,16 +37,16 @@ function App() {
         return date.toLocaleDateString('ru-RU', options);
     };
 
-    let id=window.AMOCRM.data.current_card.id
-    let entity=window.AMOCRM.data.current_entity
-   /* let domain = window.AMOCRM.widgets.system.domain;*/
-    let name=window.AMOCRM.data.current_card.user.name;
+    let id=window.AMOCRM.data.current_card.id || 0
+    let entity=window.AMOCRM.data.current_entity || ""
+    let domain = window.AMOCRM.widgets.system.domain || "";
+    let name=window.AMOCRM.data.current_card.user.name || "";
 
 
     const createMeeting = async () => {
         try {
             await axios.post('https://slmaxzoom.outer.cnvl.io/api/zoom/meetings', {
-                domain: "testdomain",
+                domain: domain,
                 first_name: name,
                 entity: entity,
                 entity_id: id
