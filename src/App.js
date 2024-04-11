@@ -29,7 +29,7 @@ function App() {
         if (currentPage > 0) {
             fetchMeetingRecords();
         }
-    }, [currentPage]); // Добавлен currentPage в массив зависимостей
+    }, [currentPage,domain]); // Добавлен currentPage в массив зависимостей
 
     const formatDateString = (dateString) => {
         const date = new Date(dateString);
