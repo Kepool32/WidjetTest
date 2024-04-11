@@ -75,9 +75,11 @@ function App() {
                                         <li key={index}>
                                             <div className="record-item">
                                                 <div>{formatDateString(record.created_at)}</div>
-                                                {record.records.map((meeting, index) => (
-                                                    <a key={index} href={meeting.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись</a>
-                                                ))}
+                                                <div className="record-links">
+                                                    {record.records.map((meeting, index) => (
+                                                        <a key={index} href={meeting.record_link} target="_blank" rel="noopener noreferrer">Ссылка на запись {index + 1}</a>
+                                                    ))}
+                                                </div>
                                             </div>
                                         </li>
                                     ))

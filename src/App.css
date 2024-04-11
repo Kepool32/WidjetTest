@@ -122,3 +122,15 @@ h1 {
 .close-modal-button:hover {
   background-color: #c82333;
 }
+.record-item {
+  margin-bottom: 20px; /* Отступ между каждым элементом .record-item */
+}
+
+.record-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-links a {
+  margin-bottom: 5px; /* Отступ между каждой ссылкой в столбце */
+}
